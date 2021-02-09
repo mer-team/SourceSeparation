@@ -1,8 +1,8 @@
 # Obtain Source Separation with [Spleeter](https://github.com/deezer/spleeter)
 
-This service is connected with ['Manager'](https://github.com/mer-team/Tests/blob/rabbit-manager/Manager/manager.js) service through [RabbitMQ](https://www.rabbitmq.com/). Takes the original audio and separates its sources depending on the model in use and place it on src folder.
+This service is connected with ['Manager'](https://github.com/mer-team/Tests/blob/rabbit-manager/Manager/manager.js) service through [RabbitMQ](https://www.rabbitmq.com/). Takes the original audio and separates its sources depending on the model in use.
 
-You need to download from [spleeter releases](https://github.com/deezer/spleeter/releases/tag/v1.4.0) the pretrained model which you want to use.
+You need to download from [spleeter releases](https://github.com/deezer/spleeter/releases/tag/v1.4.0) the pretrained model which you want to use  and place it on src folder.
 
 Run `python3.7 separate.py`
 
