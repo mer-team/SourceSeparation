@@ -29,10 +29,10 @@ jobs:
     - name: Build Local SourceSeparation Docker Image
       run: docker build -t separation:local .
 
-    - name: Container Image Scan
-      uses: azure/container-scan@v0
-      with:
-        image-name: separation:local
+    #- name: Container Image Scan
+    #  uses: azure/container-scan@v0
+    #  with:
+    #    image-name: separation:local
 
     - name: Run Local SourceSeparation Docker Image
       run: docker run -d -e TIME=10 -e HOST=$MQHOST -e USER=$MQUSER -e PASS=$MQPASS -e MNG_PORT=$MNG_PORT --net=host separation:local
