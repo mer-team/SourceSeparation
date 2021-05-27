@@ -11,7 +11,10 @@ COPY /src /sourceSeparation
 
 WORKDIR /sourceSeparation
 
-RUN apt-get update && apt-get install curl -y && \
+ADD https://github.com/deezer/spleeter/releases/download/v1.4.0/2stems.tar.gz 2stems.tar.gz 
+
+RUN tar -xzf 2stems.tar.gz && rm 2stems.tar.gz && \
+    apt-get update && apt-get install curl -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     mkdir /Audios && mkdir /Separation && \
     pip install --no-cache-dir -r ./requirements.txt && \
