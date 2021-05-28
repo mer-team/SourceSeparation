@@ -39,7 +39,7 @@ jobs:
     #    image-name: separation:local
 
     - name: Run Local SourceSeparation Docker Image
-      run: docker run -d -e TIME=10 -e HOST=$MQHOST -e USER=$MQUSER -e PASS=$MQPASS -e MNG_PORT=$MNG_PORT --net=host -v "$GITHUB_WORKSPACE/test:/Audios" separation:local
+      run: docker run -d -e TIME=10 -e HOST=$MQHOST -e USER=$MQUSER -e PASS=$MQPASS -e PORT=$MQPORT -e MNG_PORT=$MNG_PORT --net=host -v "$GITHUB_WORKSPACE/test:/Audios" separation:local
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
