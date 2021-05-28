@@ -3,7 +3,13 @@ import pika
 import json
 import os
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+mqhost = os.environ.get("HOST")
+mquser = os.environ.get("USER")
+mqpass = os.environ.get("PASS")
+mqport = os.environ.get("PORT")
+
+credentials =  pika.PlainCredentials(mquser, mqpass)
+connection = pika.BlockingConnection(pika.ConnectionParameters(mqhost, mqport,'/',credentials))
 channel = connection.channel()
 
 channel.queue_declare(queue='separate')
@@ -16,14 +22,14 @@ def callback(ch, method, properties, body):
     separator = Separator('spleeter:2stems')
     # separator = Separator('spleeter:4stems')
 
-    audio="/vagrant/VidExtractor/" + vID + ".wav"
-    destination="./Output"
+    audio="/Audios/" + vID + ".wav"
+    destination="/Audios"
 
     # Source Separation
     separator.separate_to_file(audio, destination)
 
     os.rename(audio, destination + "/" + vID + "/original.wav")
-    os.remove("/vagrant/VidExtractor/" + vID + ".mp4")
+    # os.remove("/Audios/" + vID + ".mp4")
 
     msg = {
         "Service": "SourceSeparation",

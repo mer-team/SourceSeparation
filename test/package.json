@@ -1,0 +1,23 @@
+{
+  "name": "sourceseparation-test",
+  "version": "1.0.0",
+  "description": "Source Separation Test",
+  "main": "mocha test --timeout 55000",
+  "scripts": {
+    "test": "mocha test --timeout 55000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mer-team/SourceSeparation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mer-team/SourceSeparation/issues"
+  },
+  "homepage": "https://github.com/mer-team/SourceSeparation#readme",
+  "devDependencies": {
+    "amqplib": "^0.6.0",
+    "mocha": "^8.4.0"
+  }
+}

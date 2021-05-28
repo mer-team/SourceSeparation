@@ -1,0 +1,64 @@
+name: SourceSeparation Node.js CI/CD
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+
+    env:
+      MQHOST: localhost
+      MQUSER: merUser
+      MQPASS: passwordMER
+      MQPORT: 5672
+      MNG_PORT: 15672
+
+    steps:
+    - name: Setup RabbitMQ Image
+      uses: mer-team/rabbitmq-mng-action@v1.2
+      with:
+        RABBITMQ_USER: $MQUSER
+        RABBITMQ_PASS: $MQPASS
+        RABBITMQ_PORT: $MQPORT
+        RABBITMQ_MNG_PORT: $MNG_PORT
+        RABBITMQ_TAG: '3-management-alpine'
+
+    - name: Checkout SourceSeparation Project
+      uses: actions/checkout@v2
+
+    - name: Build Local SourceSeparation Docker Image
+      run: docker build -t separation:local .
+
+    #- name: Container Image Scan
+    #  uses: azure/container-scan@v0
+    #  with:
+    #    image-name: separation:local
+
+    - name: Run Local SourceSeparation Docker Image
+      run: docker run -d -e TIME=10 -e HOST=$MQHOST -e USER=$MQUSER -e PASS=$MQPASS -e PORT=$MQPORT -e MNG_PORT=$MNG_PORT --net=host -v "$GITHUB_WORKSPACE/test:/Audios" separation:local
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install --also=dev
+      working-directory: test
+
+    - name: Running tests
+      run: npm test
+      working-directory: test
+    
+    - name: Dump separation logs
+      uses: jwalton/gh-docker-logs@v1
+      with:
+        images: 'separation'
+
+    - name: Dump docker logs on failure
+      if: failure()
+      uses: jwalton/gh-docker-logs@v1
