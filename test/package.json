@@ -2,9 +2,9 @@
   "name": "sourceseparation-test",
   "version": "1.0.0",
   "description": "Source Separation Test",
-  "main": "mocha test --timeout 55000",
+  "main": "mocha test --timeout 60000",
   "scripts": {
-    "test": "mocha test --timeout 55000"
+    "test": "mocha test --timeout 60000"
   },
   "repository": {
     "type": "git",

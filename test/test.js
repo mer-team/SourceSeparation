@@ -87,7 +87,7 @@ describe('Testing RabbitMQ', ()=>{
         }
         console.log("File found!");
         done();
-      })}, 50000);
+      })}, 55000);
   });
 
   it("Should receive a message from the RabbitMQ", (done)=>{

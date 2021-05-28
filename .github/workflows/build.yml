@@ -53,6 +53,11 @@ jobs:
     - name: Running tests
       run: npm test
       working-directory: test
+    
+    - name: Dump separation logs
+      uses: jwalton/gh-docker-logs@v1
+      with:
+        images: 'separation'
 
     - name: Dump docker logs on failure
       if: failure()
