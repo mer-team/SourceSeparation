@@ -1,10 +1,14 @@
-name: SourceSeparation Python CI/CD
+name: SourceSeparation Node.js CI/CD
 
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
 
     env:
       MQHOST: localhost
@@ -35,17 +39,20 @@ jobs:
     #    image-name: separation:local
 
     - name: Run Local SourceSeparation Docker Image
-      run: docker run -d -e TIME=10 -e HOST=$MQHOST -e USER=$MQUSER -e PASS=$MQPASS -e MNG_PORT=$MNG_PORT --net=host separation:local
+      run: docker run -d -e TIME=10 -e HOST=$MQHOST -e USER=$MQUSER -e PASS=$MQPASS -e MNG_PORT=$MNG_PORT --net=host -v "$GITHUB_WORKSPACE/test:/Audios" separation:local
 
-    #- name: Set up Python
-    #  uses: actions/setup-python@v2
-    #  with:
-    #    python-version: '3.7'
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
-    #- name: Test with pytest
-    #  run: |
-    #    pip install pytest pika
-    #    pytest
+    - name: Install dependencies
+      run: npm install --also=dev
+      working-directory: test
+
+    - name: Running tests
+      run: npm test
+      working-directory: test
 
     - name: Dump docker logs on failure
       if: failure()
