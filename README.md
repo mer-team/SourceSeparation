@@ -32,8 +32,7 @@ Through RabbitMQ:
 ### Volumes
 | Container Path | Description |
 | --- | --- |
-| `/Audios` | Folder where the downloaded audio files are accessed |
-| `/Separation` | Folder where the separated sources are saved |
+| `/Audios` | Folder where the downloaded audio files are accessed and the separated sources are saved |
 
 ### Run Local Microservice
 Run Rabbit
@@ -48,10 +47,10 @@ docker build -t sourceseparation:local .
 
 Run local `sourceSeparation`
 ```
-docker run -e TIME=10 -e USER=merUser -e PASS=passwordMER -e HOST=localhost -e MNG_PORT=15672 --net=host -v "<Local DIR>:/Audios" -v "<Local DIR>:/Separation" sourceseparation:local
+docker run -e TIME=10 -e USER=merUser -e PASS=passwordMER -e HOST=localhost -e MNG_PORT=15672 --net=host -v "<Local DIR>:/Audios" --net=host sourceseparation:local
 ```
 
 Run official `sourceSeparation` image locally
 ```
-docker run -e TIME=10 -e USER=merUser -e PASS=passwordMER -e HOST=localhost -e MNG_PORT=15672 --net=host -v "<Local DIR>:/Audios" -v "<Local DIR>:/Separation" merteam/sourceseparation:latest
+docker run -e TIME=10 -e USER=merUser -e PASS=passwordMER -e HOST=localhost -e MNG_PORT=15672 --net=host -v "<Local DIR>:/Audios" merteam/sourceseparation:latest
 ```

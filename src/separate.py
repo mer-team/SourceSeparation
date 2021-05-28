@@ -23,13 +23,13 @@ def callback(ch, method, properties, body):
     # separator = Separator('spleeter:4stems')
 
     audio="/Audios/" + vID + ".wav"
-    destination="/Separation"
+    destination="/Audios"
 
     # Source Separation
     separator.separate_to_file(audio, destination)
 
     os.rename(audio, destination + "/" + vID + "/original.wav")
-    os.remove("/Audios/" + vID + ".mp4")
+    # os.remove("/Audios/" + vID + ".mp4")
 
     msg = {
         "Service": "SourceSeparation",
