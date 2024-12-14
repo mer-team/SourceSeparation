@@ -1,4 +1,2 @@
-spleeter 
-# se a vm tiver menos de 4GB de ram executar o seguinte comando
-# pip3.7 install --no-cache-dir -r requirements.txt
+spleeter==2.4.0
 pika

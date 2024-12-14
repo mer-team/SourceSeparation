@@ -1,0 +1,25 @@
+FROM python:3.10-alpine
+
+ARG HOST=localhost
+ARG USER=guest
+ARG PASS=guest
+ARG PORT=5672
+ARG MNG_PORT=15672
+ARG TIME=10
+ARG SPLEETER_VERSION="2.4.0"
+
+RUN apk --no-cache add curl ffmpeg libsndfile
+
+RUN pip install --no-cache-dir spleeter==${SPLEETER_VERSION}
+
+COPY /src/requirements.txt /sourceSeparation
+
+RUN pip install --no-cache-dir -r ./requirements.txt
+
+COPY /src /sourceSeparation
+
+WORKDIR /sourceSeparation
+
+RUN chmod +x ./wait-for-rabbit.sh
+
+ENTRYPOINT ["./wait-for-rabbit.sh", "python", "separate.py"]
